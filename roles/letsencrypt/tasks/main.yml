@@ -8,6 +8,3 @@
 - name: No cert found! Attempt to get the certificate
   command: "certbot --non-interactive --agree-tos --email {{ le_email }} certonly --webroot -w {{ le_webroot_path }} -d {{ le_cert_domains }}"
   when: le_firstrun.stat.exists == False
-  environment: 
-    http_proxy: http://192.168.10.15:8080
-    https_proxy: http://192.168.10.15:8080

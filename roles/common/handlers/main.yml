@@ -1,0 +1,5 @@
+- name: refresh apt
+  apt: update_cache=yes
+
+- name: reload apache
+  service: name=httpd state=reloaded

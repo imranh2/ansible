@@ -1,0 +1,13 @@
+- include: debian.yml
+  when: ansible_os_family == "Debian"
+
+- name: do we already have a cert?
+  stat: path=/etc/letsencrypt/live/{{ le_cert_domains[0] }}/fullchain.pem
+  register: le_firstrun
+
+- name: No cert found! Attempt to get the certificate
+  command: "certbot --non-interactive --agree-tos --email {{ le_email }} certonly --webroot -w {{ le_webroot_path }} -d {{ le_cert_domains }}"
+  when: le_firstrun.stat.exists == False
+  environment: 
+    http_proxy: http://192.168.10.15:8080
+    https_proxy: http://192.168.10.15:8080

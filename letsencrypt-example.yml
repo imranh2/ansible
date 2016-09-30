@@ -1,0 +1,15 @@
+- hosts: anhost
+  roles:
+    - role: letsencrypt
+      le_email: ih@imranh.co.uk
+      le_webroot_path: /var/www/html 
+      le_cert_domains:
+       - imranh.co.uk
+       - www.imranh.co.uk
+
+- hosts: anotherhost
+  roles:
+    - role: letsencrypt
+      le_email: ih@imranh.co.uk
+      le_webroot_path: /var/www/html
+      le_cert_domains: mail.imranh.net

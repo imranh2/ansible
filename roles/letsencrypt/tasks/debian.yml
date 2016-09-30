@@ -1,0 +1,13 @@
+- name: install stuff
+  apt: pkg={{ item }} state=installed
+  with_items:
+    - ca-certificates
+
+- name: add jessie-backports
+  apt_repository: repo='deb http://httpredir.debian.org/debian/ jessie-backports main' state=present
+  when: ansible_os_family == "Debian" and ansible_distribution_release == "jessie"
+
+- name: install stuff we need from backports
+  apt: pkg={{ item }} default_release=jessie-backports state=installed
+  with_items:
+    - certbot

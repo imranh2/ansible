@@ -4,7 +4,7 @@
   apt:
     pkg: '{{ item }}'
     state: installed
-    #update_cache: yes
+    update_cache: yes
   with_items:
     - python-selinux
     - bridge-utils

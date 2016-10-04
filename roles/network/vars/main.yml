@@ -1,6 +1,3 @@
 interfaces_net_path:
   Debian: /etc/network/interfaces.d
   RedHat: /etc/sysconfig/network-scripts
-interfaces_ether_interfaces: []
-interfaces_bridge_interfaces: []
-interfaces_bond_interfaces: []

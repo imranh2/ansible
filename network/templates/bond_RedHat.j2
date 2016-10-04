@@ -1,0 +1,29 @@
+DEVICE={{ item.device }}
+ONBOOT=yes
+{% if item.bootproto == 'static' %}
+BOOTPROTO=none
+{% if item.address is defined %}
+IPADDR={{ item.address }}
+{% endif %}
+{% if item.netmask is defined %}
+NETMASK={{ item.netmask }}
+{% endif %}
+{% if item.gateway is defined %}
+GATEWAY={{ item.gateway }}
+{% endif %}
+{% if item.dnsservers is defined %}
+{% for i in item.dnsservers %}
+DNS{{ loop.index }}={{ i }}
+{% endfor %}
+{% endif %}
+BONDING_OPTS="mode={{ item.bond_mode }} miimon={{ item.bond_miimon|default(100) }} "
+{% endif %}
+{###}
+{% if item.bootproto == 'dhcp' %}
+BONDING_OPTS="mode={{ item.bond_mode }} miimon={{ item.bond_miimon|default(100) }} "
+BOOTPROTO=dhcp
+{% endif %}
+{###}
+{% if ansible_distribution_major_version | int >= 7 %}
+NM_CONTROLLED=no
+{% endif %}

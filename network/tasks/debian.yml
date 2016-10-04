@@ -1,0 +1,31 @@
+---
+
+- name: Debian | install packages
+  apt:
+    pkg: '{{ item }}'
+    state: installed
+    #update_cache: yes
+  with_items:
+    - python-selinux
+    - bridge-utils
+    - ifenslave
+    - resolvconf
+    - ethtool
+    - net-tools
+    - vlan
+  tags: package
+
+- name: Debian | Copy new interfaces file that includes interfaces.d
+  copy:
+    src: interfaces
+    dest: /etc/network/interfaces
+    owner: root
+    group: root
+    mode: 0644
+  tags: configuration
+
+- name: Debian | Create the directory for interface files
+  file:
+    path: '{{ interfaces_net_path[ansible_os_family] }}'
+    state: directory
+  tags: configuration

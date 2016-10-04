@@ -1,0 +1,13 @@
+---
+
+- name: RedHat | install packages
+  yum:
+    name: '{{ item }}'
+    state: installed
+  with_items:
+    - libselinux-python
+    - bridge-utils
+    - iputils
+  tags: package
+
+

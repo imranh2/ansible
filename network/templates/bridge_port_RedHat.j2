@@ -1,0 +1,9 @@
+DEVICE={{ item.1 }}
+TYPE=Ethernet
+BOOTPROTO=none
+ONBOOT=yes
+BRIDGE={{ item.0.device }}
+{####}
+{% if ansible_distribution_major_version | int >= 7 %}
+NM_CONTROLLED=no
+{% endif %}

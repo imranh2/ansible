@@ -17,22 +17,19 @@ iface {{ item.device }} inet static
 {% if item.dnssearch is defined %}
 	dns-search {{ item.dnssearch }}
 {% endif %}
-{% if item.ports is defined %}
-	bridge_ports {{ item.ports|join(' ') }}
-{% endif %}
-{% if item.stp is defined %}
-	bridge_stp {{ item.stp }}
-{% endif %}
 {% endif %}
 {###}
 {% if item.bootproto == 'dhcp' %}
 iface {{ item.device }} inet dhcp
+{% endif %}
 {% if item.ports is defined %}
-	bridge_ports {{ item.port }}
+	bridge_ports {% for i in item.ports %}{{ i }} {% endfor %}
 {% endif %}
 {% if item.stp is defined %}
 	bridge_stp {{ item.stp }}
 {% endif %}
+{% if item.mtu is defined %}
+	mtu {{ item.mtu }}
 {% endif %}
 {###}
 {% if item.route is defined %}

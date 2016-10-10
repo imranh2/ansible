@@ -1,11 +1,11 @@
 DEVICE={{ item.device }}
 TYPE=bridge
 ONBOOT=yes
-{% if item.bootproto == 'static' %}
-BOOTPROTO=none
 {% if item.stp is defined %}
 STP={{ item.stp }}
 {% endif %}
+{% if item.bootproto == 'static' %}
+BOOTPROTO=none
 {% if item.address is defined %}
 IPADDR={{ item.address }}
 {% endif %}
@@ -24,11 +24,11 @@ DNS{{ loop.index }}={{ i }}
 {###}
 {% if item.bootproto == 'dhcp' %}
 BOOTPROTO=dhcp
-{% if item.stp is defined %}
-STP={{ item.stp }}
-{% endif %}
 {% endif %}
 {###}
+{% if item.mtu is defined %}
+MTU={{ item.mtu }}
+{% endif %}
 {% if ansible_distribution_major_version | int >= 7 %}
 NM_CONTROLLED=no
 {% endif %}

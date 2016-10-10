@@ -17,20 +17,11 @@ iface {{ item.device }} inet static
 {% if item.dnssearch is defined %}
         dns-search {{ item.dnssearch }}
 {% endif %}
-{% if item.bond_mode is defined %}
-	bond-mode {{ item.bond_mode }}
-{% endif %}
-	bond-miimon {{ item.bond_miimon|default(100) }}
-{% if item.bond_slaves is defined and item.bond_mode == 'active-backup' %}
-	bond-slaves none
-{% endif %}
-{% if item.bond_slaves is defined and item.bond_mode == '802.3ad' %}
-	bond-slaves {{ item.bond_slaves|join(' ') }}
-{% endif %}
 {% endif %}
 {###}
 {% if item.bootproto == 'dhcp' %}
 iface {{ item.device }} inet dhcp
+{% endif %}
 {% if item.bond_mode is defined %}
 	bond-mode {{ item.bond_mode }}
 {% endif %}
@@ -41,8 +32,10 @@ iface {{ item.device }} inet dhcp
 {% if item.bond_slaves is defined and item.bond_mode == '802.3ad' %}
 	bond-slaves {{ item.bond_slaves|join(' ') }}
 {% endif %}
-{% endif %}
 {###}
+{% if item.mtu is defined %}
+        mtu {{ item.mtu }}
+{% endif %}
 {% if item.route is defined %}
 {% for i in item.route %}
 up route add -net {{ i.network }}  netmask {{ i.netmask }} gw {{ i.gateway }} dev {{ item.device }}

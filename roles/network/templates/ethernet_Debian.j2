@@ -22,6 +22,9 @@ iface {{ item.device }} inet static
 auto {{ item.device }}
 iface {{ item.device }} inet dhcp
 {% endif %}
+{% if item.mtu is defined %}
+	mtu {{ item.mtu }}
+{% endif %}
 {###}
 {% if item.route is defined %}
 {% for i in item.route %}

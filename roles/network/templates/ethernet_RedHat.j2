@@ -1,5 +1,8 @@
 DEVICE={{ item.device }}
 ONBOOT=yes
+{% if item.bootproto == 'manual' %}
+BOOTPROTO=none
+{% endif %}
 {% if item.bootproto == 'static' %}
 BOOTPROTO=none
 {% if item.address is defined %}

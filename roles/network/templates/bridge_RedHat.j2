@@ -1,6 +1,9 @@
 DEVICE={{ item.device }}
 TYPE=bridge
 ONBOOT=yes
+{% if item.bootproto == 'manual' %}
+BOOTPROTO=none
+{% endif %}
 {% if item.stp is defined %}
 STP={{ item.stp }}
 {% endif %}

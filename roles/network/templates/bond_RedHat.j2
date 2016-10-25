@@ -1,6 +1,9 @@
 DEVICE={{ item.device }}
 ONBOOT=yes
 BONDING_OPTS="mode={{ item.bond_mode }} miimon={{ item.bond_miimon|default(100) }} "
+{% if item.bootproto == 'manual' %}
+BOOTPROTO=none
+{% endif %}
 {% if item.bootproto == 'static' %}
 BOOTPROTO=none
 {% if item.address is defined %}

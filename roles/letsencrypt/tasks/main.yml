@@ -6,5 +6,5 @@
   register: le_firstrun
 
 - name: No cert found! Attempt to get the certificate
-  command: "certbot --non-interactive --agree-tos --email {{ le_email }} certonly --webroot -w {{ le_webroot_path }} -d {{ le_cert_domains }}"
+  command: "certbot --non-interactive --agree-tos --email {{ le_email }} certonly --webroot -w {{ le_webroot_path }} -d {{ le_cert_domains | join(',') }}"
   when: le_firstrun.stat.exists == False

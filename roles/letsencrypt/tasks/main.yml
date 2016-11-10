@@ -2,6 +2,6 @@
   when: ansible_os_family == "Debian"
 
 - name: Attempt to get the certificate
-  shell: "certbot --keep --expand --non-interactive --agree-tos --email {{ le_email }} certonly --webroot -w {{ le_webroot_path }} -d {{ le_cert_domains | join(',') }}"
+  command: "certbot --keep --expand --non-interactive --agree-tos --email {{ le_email }} certonly --webroot -w {{ le_webroot_path }} -d {{ le_cert_domains | join(',') }}"
   args:
     creates: /etc/letsencrypt/live/{{ le_cert_domains[0] }}/cert.pem

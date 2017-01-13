@@ -1,0 +1,47 @@
+$ORIGIN	{{ item.domain }}
+$TTL	86400 ;24 hours
+@	IN	SOA	{{ item.primary_master }}.     hostmaster.{{ item.domain }}. (
+			{{ item.serial }}	; serial
+			21600		; refresh after 6 hours
+			3600		; retry after 1 hour
+			604800		; expire after 1 week
+			86400 )		; minimum TTL of 1 day
+
+{% for nameserver in item.nameservers %}
+				IN	NS	{{ nameserver }}.
+{% endfor %}
+{% if item.mxs is defined %}
+{% for mx in item.mxs %}
+				IN	MX	{{ mx.0 }}	{{ mx.1 }}.
+{% endfor %}
+{% endif %}
+
+{% if item.txts is defined %}
+{% for txt in item.txts %}
+				IN	TXT	"{{ txt }}"
+{% endfor %}
+{% endif %}
+
+{% if item.ptrs is defined %}
+{% for ptr in item.ptrs %}
+{{ ptr.0 }}			IN	PTR	{{ ptr.1 }}.
+{% endfor %}
+{% endif %}
+
+{% if item.as is defined %}
+{% for a in item.as %}
+{{ a.0 }}			IN	A	{{ a.1 }}
+{% endfor %}
+{% endif %}
+
+{% if item.aaaas is defined %}
+{% for aaaa in item.aaaas %}
+{{ aaaa.0 }}			IN	AAAA	{{ aaaa.1 }}
+{% endfor %}
+{% endif %}
+
+{% if item.cnames is defined %}
+{% for cname in item.cnames %}
+{{ cname.0 }}			IN	cname	{{ cname.1 }}
+{% endfor %}
+{% endif %}

@@ -1,0 +1,34 @@
+- hosts: localhost
+  roles:
+    - role: dns-server
+      master:
+        - domain: example.com
+          slaves: ["127.0.0.2"]
+          serial: 1970010101
+          primary_master: ns1.example.com
+          nameservers: ["ns1.example.com","ns2.example.com"]
+          mxs:
+            - ["10", "smtp.example.com"]
+            - ["20", "smtp-backup.example.com"]
+          as:
+            - ["@", "0.1.1.1"]
+            - ["localhost", "127.0.0.1"]
+            - ["imaginary", "0.1.2.3"]
+          cnames:
+            - ["ftp", "ftp.example.org."]
+          txts:
+            - ["some spf record or something"]
+          aaaas:
+            - ["ipv6", "::1"]
+        - domain: 2.1.0.IN-ADDR.ARPA
+          serial: 1970010101
+          primary_master: ns1.example.com
+          nameservers:
+            - ns1.example.com
+            - ns2.example.com
+          ptrs:
+            - ["3", "ftp.example.com"]
+      slave:
+        - domain: example.org
+          masters:
+            - ns1.example.org

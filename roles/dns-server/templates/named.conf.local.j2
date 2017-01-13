@@ -1,0 +1,28 @@
+//
+// Do any local configuration here
+//
+
+// Consider adding the 1918 zones here, if they are not used in your
+// organization
+//include "/etc/bind/zones.rfc1918";
+
+{% if master is defined %}
+{% for zone in master %}
+	zone "{{ zone.domain }}" {
+		type master;
+		file "/etc/bind/zones/db.{{ zone.domain }}";
+		allow-transfer {127.0.0.1;{% if zone.slaves is defined %}{% for slaves in zone.slaves %} {{ slaves }};{% endfor %}{% endif %}};
+	};
+{% endfor %}
+{% endif %}
+
+{% if slave is defined %}
+{% for zone in slave %}
+	zone "{{ zone.domain }}" {
+		type slave;
+		file "/etc/bind/zones/db.{{ zone.domain }}";
+		masters { {% for master in zone.master %}{{ master }}; {% endfor %}};
+		allow-transfer {"none";};
+	};
+{% endfor %}
+{% endif %}

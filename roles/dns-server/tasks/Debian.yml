@@ -1,0 +1,30 @@
+- name: install the latest version of bind a some dns utils
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - bind9
+
+- name: deploy named.conf.options
+  template:
+    src: named.conf.options.j2
+    dest: /etc/bind/named.conf.options
+  notify: restart bind
+
+- name: deploy named.conf.local
+  template:
+    src: named.conf.local.j2
+    dest: /etc/bind/named.conf.local
+  notify: restart bind
+
+- name: create dir for zone files
+  file:
+    path: /etc/bind/zones
+    state: directory
+
+- name: Create master zones files
+  template:
+    src: zone.j2
+    dest: "/etc/bind/zones/db.{{ item.domain }}"
+  with_items: "{{ master }}"
+  notify: restart bind

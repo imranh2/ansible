@@ -1,11 +1,17 @@
 - name: Enable contrib and non free for main (jessie)
-  apt_repository: repo='deb http://httpredir.debian.org/debian/ jessie main contrib non-free' state=present
+  apt_repository:
+    repo: "deb http://httpredir.debian.org/debian/ jessie main contrib non-free"
+    state: present
   notify: refresh apt
 
 - name: Enable contrib and non free for security updates (jessie)
-  apt_repository: repo='deb http://security.debian.org/ jessie/updates main contrib non-free' state=present
+  apt_repository:
+    repo: "deb http://security.debian.org/ jessie/updates main contrib non-free"
+    state: present
   notify: refresh apt
 
 - name: Enable contrib and non free for jessie-updates (jessie)
-  apt_repository: repo='deb http://httpredir.debian.org/debian/ jessie-updates main contrib non-free' state=present
+  apt_repository:
+    repo: "deb http://httpredir.debian.org/debian/ jessie-updates main contrib non-free"
+    state: present
   notify: refresh apt

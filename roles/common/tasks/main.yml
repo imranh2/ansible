@@ -1,5 +1,7 @@
 - name: Set up ssh keys
-  authorized_key: user=root key="{{ item }}"
+  authorized_key:
+    user: root
+    key: "{{ item }}"
   with_file:
     - ssh_keys/imranh
 

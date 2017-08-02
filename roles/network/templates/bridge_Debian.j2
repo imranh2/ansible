@@ -1,5 +1,5 @@
 auto {{ item.device }}
-% if item.bootproto == 'manual' %}
+{% if item.bootproto == 'manual' %}
 iface {{ item.device }} inet manual
 {% endif %}
 {% if item.bootproto == 'static' %}

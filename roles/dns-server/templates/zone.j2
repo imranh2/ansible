@@ -45,3 +45,10 @@ $TTL	86400 ;24 hours
 {{ cname.0 }}			IN	cname	{{ cname.1 }}
 {% endfor %}
 {% endif %}
+
+
+{% if item.other is defined %}
+{% for thing in item.other %}
+{{ thing.0 }}
+{% endfor %}
+{% endif %}

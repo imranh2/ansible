@@ -1,0 +1,9 @@
+DEVICE={{ item.1 }}
+DEVICETYPE=TeamPort
+BOOTPROTO=none
+TEAM_MASTER={{ item.0.device }}
+ONBOOT=yes
+{% if item.team_port_config is defined %}
+TEAM_PORT_CONFIG={{ item.team_port_config }}
+{% endif %}
+{###}

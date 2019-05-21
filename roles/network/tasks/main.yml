@@ -9,10 +9,6 @@
 - name: load the 802.1q (vlan) module
   modprobe: name=8021q state=present
 
-- include: 'ethernet_configuration.yml'
-  when: interfaces_ether_interfaces is defined
-  tags: configuration
-
 - include: 'bridge_configuration.yml'
   when: interfaces_bridge_interfaces is defined
   tags: configuration
@@ -21,7 +17,10 @@
   when: interfaces_bond_interfaces is defined
   tags: configuration
 
-- name: Bring up/down ether interfaces
-  shell: 'ifdown {{ item.item.device }}; ifup {{ item.item.device }}'
-  with_items: '{{ ether_result.results }}'
-  when: ether_result is defined and item.changed
+- include: 'team_configuration.yml'
+  when: interfaces_team_interfaces is defined
+  tags: configuration
+
+- include: 'ethernet_configuration.yml'
+  when: interfaces_ether_interfaces is defined
+  tags: configuration

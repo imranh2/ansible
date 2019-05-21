@@ -1,0 +1,32 @@
+DEVICE={{ item.device }}
+DEVICETYPE=Team
+TEAM_CONFIG={{ item.team_config }}
+ONBOOT=yes
+{% if item.bootproto == 'manual' %}
+BOOTPROTO=none
+{% endif %}
+{% if item.bootproto == 'static' %}
+BOOTPROTO=none
+{% if item.address is defined %}
+IPADDR={{ item.address }}
+{% endif %}
+{% if item.netmask is defined %}
+NETMASK={{ item.netmask }}
+{% endif %}
+{% if item.gateway is defined %}
+GATEWAY={{ item.gateway }}
+{% endif %}
+{% if item.dnsservers is defined %}
+{% for i in item.dnsservers %}
+DNS{{ loop.index }}={{ i }}
+{% endfor %}
+{% endif %}
+{% endif %}
+{###}
+{% if item.bootproto == 'dhcp' %}
+BOOTPROTO=dhcp
+{% endif %}
+{###}
+{% if item.mtu is defined %}
+MTU={{ item.mtu }}
+{% endif %}

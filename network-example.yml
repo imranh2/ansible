@@ -1,8 +1,8 @@
 ---
 - hosts: localhost
-  roles: 
+  roles:
     - role: network
-      interfaces_ether_interfaces: 
+      interfaces_ether_interfaces:
        - device: eth0
          bootproto: static
          address: 192.168.0.69
@@ -12,12 +12,12 @@
          dnssearch: example.com
        - device: eth0.88
          bootproto: static
-         address: 192.168.88.69 
+         address: 192.168.88.69
          netmask: 255.255.255.0
          vlan: yes
        - device: eth0:0
          bootproto: static
-         address: 192.168.0.68 
+         address: 192.168.0.68
          netmask: 255.255.255.0
       interfaces_bridge_interfaces:
        -  device: br0
@@ -32,3 +32,8 @@
           bond_mode: 802.3ad
           bond_miimon: 100
           bond_slaves: [eth3, eth4]
+      interfaces_team_interfaces:
+        - device: team0
+          bootproto: manual
+          team_slaves: [p5p1,p5p2]
+          team_config: '"{\"runner\": {\"name\": \"lacp\", \"fast_rate\": true, \"tx_hash\": [\"l4\"]}}"'

@@ -1,0 +1,5 @@
+- name: poke systemd
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: docker

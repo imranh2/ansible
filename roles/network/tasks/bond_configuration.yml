@@ -11,7 +11,7 @@
   modprobe:
     name: bonding
     state: present
-  when: bond_result|changed
+  when: bond_result is changed
 
 - name: Write configuration files for route configuration
   template:
